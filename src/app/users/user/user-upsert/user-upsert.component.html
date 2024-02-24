@@ -1,0 +1,304 @@
+<form [formGroup]="userUpsertForm">
+    <!-- first name -->
+    <div class="form-group">
+      <label for="fname">First Name <span class="text-danger">*</span></label>
+      <input
+        type="text"
+        class="form-control"
+        formControlName="fname"
+        id="fname"
+        name="fname"
+      />
+      <ng-container
+        *ngIf="(f['fname'].touched && f['fname'].invalid) || isFormSubmitted"
+      >
+        <span
+          class="text-danger text-capitalize"
+          *ngIf="f['fname'].hasError('required')"
+        >
+          Please Enter your first Name
+        </span>
+      </ng-container>
+    </div>
+  
+    <!-- last name -->
+  
+    <div class="form-group">
+      <label for="email">Last Name <span class="text-danger">*</span></label>
+      <input
+        type="text"
+        class="form-control"
+        formControlName="lname"
+        id="lname"
+        name="lname"
+      />
+      <ng-container
+        *ngIf="(f['lname'].touched && f['lname'].invalid) || isFormSubmitted"
+      >
+        <span
+          class="text-danger text-capitalize"
+          *ngIf="f['lname'].hasError('required')"
+        >
+          Please Enter your Last Name
+        </span>
+      </ng-container>
+    </div>
+  
+    <!-- E-Mail -->
+    <div class="form-group">
+      <label for="email">Email <span class="text-danger">*</span></label>
+      <input
+        type="text"
+        class="form-control"
+        formControlName="email"
+        id="email"
+        name="email"
+      />
+      <ng-container
+        *ngIf="(f['email'].touched && f['email'].invalid) || isFormSubmitted"
+      >
+        <span
+          class="text-danger text-capitalize"
+          *ngIf="f['email'].hasError('required')"
+        >
+          Please Enter your email
+        </span>
+        <span
+          class="text-danger text-capitalize"
+          *ngIf="f['email'].hasError('pattern') && f['email'].dirty"
+        >
+          Please Enter your valid Email-id
+        </span>
+      </ng-container>
+    </div>
+  
+    <!-- Mobile Number -->
+    <div class="form-group">
+      <label for="mobnumber"
+        >Mobile Number <span class="text-danger">*</span></label
+      >
+      <input
+        type="text"
+        class="form-control"
+        formControlName="mobnumber"
+        id="mobnumber"
+        name="mobnumber"
+      />
+      <ng-container
+        *ngIf="
+          (f['mobnumber'].touched && f['mobnumber'].invalid) || isFormSubmitted
+        "
+      >
+        <span
+          class="text-danger text-capitalize"
+          *ngIf="f['mobnumber'].hasError('required')"
+        >
+          Please Enter your Mobile Number
+        </span>
+        <span
+          class="text-danger text-capitalize"
+          *ngIf="f['mobnumber'].hasError('pattern') && f['mobnumber'].dirty"
+        >
+          accepts only numbers
+        </span>
+  
+        <span
+          class="text-danger text-capitalize"
+          *ngIf="
+            (f['mobnumber'].hasError('minlength') ||
+              f['mobnumber'].hasError('maxlength')) &&
+            !f['mobnumber'].hasError('pattern') &&
+            f['mobnumber'].dirty
+          "
+        >
+          Mobile number should be 10 digits only
+        </span>
+      </ng-container>
+    </div>
+  
+    <!-- ADDRESS -->
+  
+    <address class="address" formGroupName="address">
+      <h3>Address</h3>
+      <div class="row">
+        <div class="col-md-6">
+          <!-- STREET -->
+          <div class="form-group">
+            <label for="street"
+              >Street Name/No<span class="text-danger">*</span></label
+            >
+            <input
+              class="form-control"
+              type="text"
+              name="street"
+              id="street"
+              formControlName="street"
+            />
+            <ng-container
+              *ngIf="
+                (addrsControl['street'].touched &&
+                  addrsControl['street'].invalid) ||
+                isFormSubmitted
+              "
+            >
+              <span
+                class="text-danger text-capitalize"
+                *ngIf="addrsControl['street'].hasError('required')"
+              >
+                Please Enter street Name or number
+              </span>
+            </ng-container>
+          </div>
+  
+          <!-- CITY -->
+          <div class="form-group">
+            <label for="city">City <span class="text-danger">*</span></label>
+            <input
+              class="form-control"
+              type="text"
+              name="city"
+              id="city"
+              formControlName="city"
+            />
+            <ng-container
+              *ngIf="
+                (addrsControl['city'].touched && addrsControl['city'].invalid) ||
+                isFormSubmitted
+              "
+            >
+              <span
+                class="text-danger text-capitalize"
+                *ngIf="addrsControl['city'].hasError('required')"
+              >
+                Please Enter city Name
+              </span>
+            </ng-container>
+          </div>
+  
+          <!-- pincode -->
+          <div class="form-group">
+            <label for="pincode"
+              >Area Pin Code <span class="text-danger">*</span></label
+            >
+            <input
+              class="form-control"
+              type="text"
+              name="pincode"
+              id="pincode"
+              formControlName="pincode"
+            />
+            <ng-container
+              *ngIf="
+                (addrsControl['pincode'].touched &&
+                  addrsControl['pincode'].invalid) ||
+                isFormSubmitted
+              "
+            >
+              <span
+                class="text-danger text-capitalize"
+                *ngIf="addrsControl['pincode'].hasError('required')"
+              >
+                Please Enter pincode Name
+              </span>
+  
+              <span
+                class="text-danger text-capitalize"
+                *ngIf="
+                  addrsControl['pincode'].hasError('pattern') &&
+                  addrsControl['pincode'].dirty
+                "
+              >
+                accepts only numbers
+              </span>
+  
+              <span
+                class="text-danger text-capitalize"
+                *ngIf="
+                  (addrsControl['pincode'].hasError('minlength') ||
+                    addrsControl['pincode'].hasError('maxlength')) &&
+                  !addrsControl['pincode'].hasError('pattern') &&
+                  addrsControl['pincode'].dirty
+                "
+              >
+                Pin Code should be 6 digits only
+              </span>
+            </ng-container>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <!-- STATE -->
+          <div class="form-group">
+            <label for="state">State <span class="text-danger">*</span></label>
+            <input
+              class="form-control"
+              type="text"
+              name="state"
+              id="state"
+              formControlName="state"
+            />
+            <ng-container
+              *ngIf="
+                (addrsControl['state'].touched &&
+                  addrsControl['state'].invalid) ||
+                isFormSubmitted
+              "
+            >
+              <span
+                class="text-danger text-capitalize"
+                *ngIf="addrsControl['state'].hasError('required')"
+              >
+                Please Enter state Name
+              </span>
+            </ng-container>
+          </div>
+  
+          <!-- COUNTRY -->
+          <div class="form-group">
+            <label for="country">Country<span class="text-danger">*</span></label>
+            <input
+              class="form-control"
+              type="text"
+              name="country"
+              id="country"
+              formControlName="country"
+            />
+            <ng-container
+              *ngIf="
+                (addrsControl['country'].touched &&
+                  addrsControl['country'].invalid) ||
+                isFormSubmitted
+              "
+            >
+              <span
+                class="text-danger text-capitalize"
+                *ngIf="addrsControl['country'].hasError('required')"
+              >
+                Please Enter country Name
+              </span>
+            </ng-container>
+          </div>
+        </div>
+      </div>
+    </address>
+  
+    <!-- ACTIONS -->
+  
+    <button
+      class="btn btn-success"
+      color="primary"
+      *ngIf="!isInEditMode"
+      (click)="onUserAdd()"
+    >
+      Add New User
+    </button>
+    <button
+      type="button"
+      class="btn btn-warning"
+      color="primary"
+      *ngIf="isInEditMode"
+      (click)="onUserUpdate()"
+    >
+      Update User
+    </button>
+  </form>
+  

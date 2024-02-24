@@ -1,0 +1,36 @@
+<div class="table-responsive">
+    <table class="table table-bordered" *ngIf="userArr.length > 0; else noUsers">
+    <!-- <table class="table table-bordered" > -->
+      <thead >
+        <tr class="text-center" >
+        <tr class="text-center" >
+          <th>Name</th>
+          <th>Email</th>
+          <th>Phone Number</th>
+          <th colspan="2">Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let user of userArr">
+          <td>{{ user.fname }} {{ user.lname }}</td>
+          <td>{{ user.email }}</td>
+          <td>{{ user.mobnumber }}</td>
+          <td>
+            <i
+              class="text-success fa-solid fa-pen-to-square"
+              (click)="onUserEdit(user)"
+            ></i>
+          </td>
+          <td>
+            <i
+              class="text-danger fa-solid fa-trash"
+              (click)="onUserDelete(user.userid!)"
+            ></i>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <ng-template #noUsers>
+      <p class="alert alert-danger text-center">No Users Added Yet !!!!!</p>
+    </ng-template>
+  </div>
