@@ -1,9 +1,11 @@
-
- <div class="text-center text-uppercase bg-success text-white p-3 d-flex justify-content-between"> 
-  <h1 class="">
-    Welcome To user management system
-   </h1>
+<div
+  class="text-center text-uppercase bg-success text-white p-3 d-flex justify-content-between"
+>
+  <h1 class="">Welcome To user management system</h1>
   <button class="btn btn-warning" routerLink="users">Go to Users</button>
- </div>
+</div>
 
- <router-outlet></router-outlet>
+<router-outlet></router-outlet>
+<div *ngIf="isLoading">
+  <app-loader></app-loader>
+</div>
