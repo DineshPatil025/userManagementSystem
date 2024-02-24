@@ -39,6 +39,12 @@ export class UserListComponent implements OnInit {
         this.userArr.splice(deleteIndex,1)
                     
       })
+
+      this._userService.updateUserSubjectAsObs$
+      .subscribe((res:any) => {
+        let updateIndex = this.userArr.findIndex(user => user.userid === res.userid)
+        this.userArr[updateIndex] = res;
+      })
   }
 
   onUserEdit(editUserObj: Iusers) {

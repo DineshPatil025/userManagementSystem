@@ -81,7 +81,12 @@ export class UserUpsertComponent implements OnInit {
   }
 
   onUserUpdate() {
-
+    console.log("update clicked");
+    let updateUserObj = this.userUpsertForm.value;
+    this._userService.updateuser(updateUserObj,this.updateId)
+    this._toastService.success("User Updated Succesfully", "User Update")
+    this.isInEditMode = false;
+    this.userUpsertForm.reset();
   }
 
   get f() {

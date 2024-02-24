@@ -23,6 +23,9 @@ export class UserdataService {
   private editUserSubject$ = new Subject();
   editUserSubjectAsObs$ = this.editUserSubject$.asObservable();
 
+  private updateUserSubject$ = new Subject();
+  updateUserSubjectAsObs$ = this.updateUserSubject$.asObservable();
+
   constructor(private _http: HttpClient) {
   
   }
@@ -62,6 +65,16 @@ export class UserdataService {
 
   editUser(editUserObj:Iusers){
     this.editUserSubject$.next(editUserObj)
+  }
+
+  updateuser(updateUserObj:Iusers,updateId:string){
+
+    let updateUrl = `${environment.baseUrl}/users/${updateId}.json`
+    this._http.put(updateUrl,updateUserObj).subscribe(res => console.log(res));
+
+    this.updateUserSubject$.next({...updateUserObj,userid:updateId})
+    
+
   }
 
 }
