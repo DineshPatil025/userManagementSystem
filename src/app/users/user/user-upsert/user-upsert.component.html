@@ -18,6 +18,12 @@
         >
           Please Enter your first Name
         </span>
+        <span
+        class="text-danger text-capitalize"
+        *ngIf="f['fname'].hasError('pattern') && f['fname'].dirty"
+      >
+        Please Enter only Alphabets
+      </span>
       </ng-container>
     </div>
   
@@ -41,6 +47,12 @@
         >
           Please Enter your Last Name
         </span>
+        <span
+        class="text-danger text-capitalize"
+        *ngIf="f['lname'].hasError('pattern') && f['lname'].dirty"
+      >
+        Please Enter only Alphabets
+      </span>
       </ng-container>
     </div>
   
@@ -293,12 +305,23 @@
     </button>
     <button
       type="button"
-      class="btn btn-warning"
+      class="btn btn-warning mr-2"
       color="primary"
       *ngIf="isInEditMode"
       (click)="onUserUpdate()"
     >
+    
       Update User
+    </button>
+    <button
+      type="button"
+      class="btn btn-warning"
+      color="primary"
+      *ngIf="isInEditMode"
+      (click)="onCancelUpdate()"
+    >
+    
+      Cancel
     </button>
   </form>
   

@@ -51,6 +51,7 @@ export class UserdataService {
 
   addNewUser(newUserObj: Iusers) {
     this._http.post(this.userUrl, newUserObj).subscribe((res: any) => {
+      
       this.newUserSubject$.next({ ...newUserObj, userid: res['name'] })
 
     });

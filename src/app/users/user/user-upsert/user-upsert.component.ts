@@ -32,23 +32,35 @@ export class UserUpsertComponent implements OnInit {
 
   ngOnInit(): void {
 
+    this._userService.getAllUsers()
+      .subscribe(res => {
+        this.userArr = res;
+      })
+
+    this._userService.newUserSubjectAsObs$
+      .subscribe((res: any) => {
+        this.userArr.push(res)
+      })
+
     this._userService.editUserSubjectAsObs$
-        .subscribe((res:any) => {
-          if(res){
-            this.isInEditMode = true;
-            this.userUpsertForm.patchValue(res)
-            this.updateId = res.userid;
-            
-          }
-        })
+      .subscribe((res: any) => {
+        if (res) {
+          this.isInEditMode = true;
+          this.userUpsertForm.patchValue(res)
+          this.updateId = res.userid;
+          console.log(this.updateId);
+
+
+        }
+      })
   }
 
 
   // ### CREATE FORM
   createUserUpsert() {
     this.userUpsertForm = this._fb.group({
-      fname: [null, [Validators.required]],
-      lname: [null, [Validators.required]],
+      fname: [null, [Validators.required, Validators.pattern('^[a-zA-Z]+$')]],
+      lname: [null, [Validators.required, Validators.pattern('^[a-zA-Z]+$')]],
       email: [null, [Validators.required, Validators.pattern('^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$')]],
       mobnumber: [null, [Validators.required, Validators.pattern("^[1-9]+[0-9]*$"), Validators.minLength(10), Validators.maxLength(10)]],
       address: this._fb.group({
@@ -66,12 +78,32 @@ export class UserUpsertComponent implements OnInit {
   onUserAdd() {
     this.isFormSubmitted = true;
 
+    let isUserExists: boolean = false;
+
     if (this.userUpsertForm.valid) {
+
       let newUserObj = this.userUpsertForm.value;
-      this._userService.addNewUser(newUserObj);
-      this.userUpsertForm.reset()
-      this.isFormSubmitted = false;
-      this._toastService.success("New User Added Succesfully", "User Added");
+
+      this.userArr.forEach(user => {
+        if (user.email === newUserObj.email) {
+          isUserExists = true;
+          this.updateId = user.userid!;
+
+        }
+      })
+
+      if (!isUserExists) {
+        this._userService.addNewUser(newUserObj);
+        this.userUpsertForm.reset()
+        this.isFormSubmitted = false;
+        this._toastService.success("New User Added Succesfully", "User Added");
+      } else if (isUserExists) {
+        this.isInEditMode = true;
+        this._toastService.error("User already exists", "User Exists")
+
+
+      }
+
 
 
     } else {
@@ -81,12 +113,19 @@ export class UserUpsertComponent implements OnInit {
   }
 
   onUserUpdate() {
-    console.log("update clicked");
     let updateUserObj = this.userUpsertForm.value;
-    this._userService.updateuser(updateUserObj,this.updateId)
+
+    this._userService.updateuser(updateUserObj, this.updateId)
     this._toastService.success("User Updated Succesfully", "User Update")
     this.isInEditMode = false;
+    this.isFormSubmitted = false
     this.userUpsertForm.reset();
+  }
+
+
+  onCancelUpdate(){
+    this.userUpsertForm.reset()
+    this.isFormSubmitted = false;
   }
 
   get f() {
