@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ToastrService } from 'ngx-toastr';
 import { Iusers } from 'src/app/shared/models/users';
 import { UserdataService } from 'src/app/shared/services/userdata.service';
+import Swal from 'sweetalert2'
 
 @Component({
   selector: 'app-user-list',
@@ -53,8 +54,38 @@ export class UserListComponent implements OnInit {
   }
 
   onUserDelete(deletid: string) {
-    this._userService.deleteUser(deletid)
-    this._toastService.error("User Deleted Succesfully", "Delete")
+    
+    
+    const swalWithBootstrapButtons = Swal.mixin({
+      customClass: {
+        confirmButton: "btn btn-success",
+        cancelButton: "btn btn-danger"
+      },
+      buttonsStyling: false
+    });
+    swalWithBootstrapButtons.fire({
+      title: "Are you sure You want to?",
+      text: "You won't be able to revert this!",     
+      showCancelButton: true,
+      confirmButtonText: "Yes, delete it!",
+      cancelButtonText: "No, cancel!",
+      reverseButtons: true
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this._userService.deleteUser(deletid)
+        this._toastService.warning("User Deleted Succesfully", "Delete")
+      } else if (
+        /* Read more about handling dismissals below */
+        result.dismiss === Swal.DismissReason.cancel
+      ) {
+        this._toastService.success("User is not deleted", "Delete")
+      }
+    })
+    console.log(this.userArr);
+
+
+    // this._userService.deleteUser(deletid)
+    // this._toastService.error("User Deleted Succesfully", "Delete")
 
   }
 

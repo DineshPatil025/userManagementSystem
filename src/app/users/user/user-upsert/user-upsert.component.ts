@@ -49,10 +49,14 @@ export class UserUpsertComponent implements OnInit {
           this.userUpsertForm.patchValue(res)
           this.updateId = res.userid;
           console.log(this.updateId);
-
-
         }
       })
+
+      this._userService.deleteUserSubjectAsObs$
+        .subscribe(res => {
+          let findIndex = this.userArr.findIndex(user => user.userid === res)
+          this.userArr.splice(findIndex,1)
+        })
   }
 
 
@@ -77,6 +81,7 @@ export class UserUpsertComponent implements OnInit {
 
   onUserAdd() {
     this.isFormSubmitted = true;
+    console.log(this.userArr);
 
     let isUserExists: boolean = false;
 
@@ -123,9 +128,10 @@ export class UserUpsertComponent implements OnInit {
   }
 
 
-  onCancelUpdate(){
+  onCancelUpdate() {
     this.userUpsertForm.reset()
     this.isFormSubmitted = false;
+    this.isInEditMode = false;
   }
 
   get f() {
